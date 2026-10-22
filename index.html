@@ -1,0 +1,1430 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desi Style Wear & Electronics | Mobile Mega Store</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#fff1f2',
+                            100: '#ffe4e6',
+                            500: '#e11d48',
+                            600: '#e11d48',
+                            700: '#be123c',
+                            800: '#9f1239',
+                            gold: '#d97706',
+                            goldlight: '#fef3c7'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #e11d48;
+            border-radius: 10px;
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 text-gray-800 font-sans antialiased min-h-screen flex flex-col justify-between pb-16 sm:pb-0"
+    onload="initStore()">
+
+    <!-- Top Announcement Bar -->
+    <div
+        class="bg-brand-800 text-white text-[11px] sm:text-xs py-1.5 px-3 text-center font-medium shadow-sm flex items-center justify-between">
+        <div class="truncate">🚚 <span class="font-bold text-yellow-300">Free Home Delivery</span> Across India!</div>
+        <div class="shrink-0 font-bold text-yellow-300 ml-2">📞 8002322367</div>
+    </div>
+
+    <!-- Header -->
+    <header class="sticky top-0 z-40 bg-white shadow-sm border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-3 py-2.5 flex justify-between items-center">
+
+            <!-- Logo -->
+            <div class="flex items-center space-x-2 cursor-pointer" onclick="switchTab('shop')">
+                <div
+                    class="w-9 h-9 bg-gradient-to-tr from-brand-700 to-amber-500 rounded-xl flex items-center justify-center text-white shadow font-black text-base shrink-0">
+                    DS
+                </div>
+                <div class="leading-tight">
+                    <h1 class="text-base font-black tracking-tight text-gray-900">
+                        DESI <span class="text-brand-600">STYLE</span>
+                    </h1>
+                    <p class="text-[9px] text-gray-500 font-bold uppercase tracking-wider">Fashion & Electronics Mega
+                        Store</p>
+                </div>
+            </div>
+
+            <!-- Header Action Buttons -->
+            <div class="flex items-center space-x-2">
+                <button onclick="openAdminAuthModal()"
+                    class="px-2.5 py-1.5 bg-gray-900 hover:bg-black text-yellow-400 text-[11px] font-bold rounded-lg shadow flex items-center space-x-1 transition">
+                    <i class="fa-solid fa-user-shield text-xs"></i>
+                    <span class="hidden xs:inline">Master Admin</span>
+                </button>
+
+                <button onclick="toggleCartDrawer(true)"
+                    class="relative p-2 text-gray-700 hover:text-brand-600 transition">
+                    <i class="fa-solid fa-bag-shopping text-xl"></i>
+                    <span id="cart-count-badge"
+                        class="absolute top-0 right-0 bg-brand-600 text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center border border-white">0</span>
+                </button>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow">
+
+        <!-- SHOP TAB -->
+        <section id="tab-shop" class="tab-content">
+
+            <!-- Hero Banner -->
+            <div class="bg-gradient-to-r from-gray-900 via-brand-900 to-gray-900 text-white py-6 px-4">
+                <div class="max-w-7xl mx-auto text-center space-y-2">
+                    <span
+                        class="bg-yellow-500/20 text-yellow-300 text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded-full border border-yellow-500/30">
+                        ✨ Best Fashion & Electronics Deals
+                    </span>
+                    <h2 class="text-2xl font-black leading-tight text-white">
+                        Fashion & Gadgets,<br><span class="text-yellow-400">Best Price.</span>
+                    </h2>
+                    <p class="text-xs text-gray-300">1,000+ Electronics & 1,000+ Ethnic Wear Items</p>
+                </div>
+            </div>
+
+            <!-- Search & Filters -->
+            <div class="max-w-7xl mx-auto px-3 py-4 space-y-3">
+
+                <!-- Search Input -->
+                <div class="relative w-full">
+                    <i
+                        class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs"></i>
+                    <input type="text" id="search-input" onkeyup="filterProducts()"
+                        placeholder="Search phones, smartwatches, earbuds, sarees, kurtis..."
+                        class="w-full pl-9 pr-3 py-2 text-xs bg-white border border-gray-300 rounded-xl focus:ring-2 focus:ring-brand-500 outline-none shadow-sm">
+                </div>
+
+                <!-- Category Pills -->
+                <div class="flex space-x-2 overflow-x-auto no-scrollbar py-1" id="category-pills">
+                    <button onclick="filterCategory('All')"
+                        class="cat-pill shrink-0 px-3 py-1.5 rounded-lg text-xs font-bold transition bg-brand-600 text-white shadow-sm">
+                        All (<span id="cat-count-all">0</span>)
+                    </button>
+                    <button onclick="filterCategory('Electronics')"
+                        class="cat-pill shrink-0 px-3 py-1.5 rounded-lg text-xs font-semibold transition bg-white text-gray-700 border border-gray-200">
+                        Electronics 📱
+                    </button>
+                    <button onclick="filterCategory('Women')"
+                        class="cat-pill shrink-0 px-3 py-1.5 rounded-lg text-xs font-semibold transition bg-white text-gray-700 border border-gray-200">
+                        Women's Wear
+                    </button>
+                    <button onclick="filterCategory('Men')"
+                        class="cat-pill shrink-0 px-3 py-1.5 rounded-lg text-xs font-semibold transition bg-white text-gray-700 border border-gray-200">
+                        Men's Wear
+                    </button>
+                    <button onclick="filterCategory('Festive')"
+                        class="cat-pill shrink-0 px-3 py-1.5 rounded-lg text-xs font-semibold transition bg-white text-gray-700 border border-gray-200">
+                        Festival 🎉
+                    </button>
+                </div>
+
+                <!-- Product Grid -->
+                <div id="product-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 pt-2">
+                </div>
+
+                <!-- Load More -->
+                <div class="mt-6 text-center space-y-1 pb-4">
+                    <p class="text-[11px] text-gray-500">Showing <span id="showing-count"
+                            class="font-bold text-gray-800">0</span> of <span id="total-count-display"
+                            class="font-bold text-brand-600">0</span> items</p>
+                    <button id="btn-load-more" onclick="loadMoreProducts()"
+                        class="bg-gray-900 hover:bg-black text-white text-xs font-bold px-5 py-2 rounded-xl shadow transition hidden">
+                        Load More Items
+                    </button>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- TRACK ORDER TAB -->
+        <section id="tab-track" class="tab-content hidden max-w-lg mx-auto px-4 py-8">
+            <div class="bg-white p-5 rounded-2xl shadow border border-gray-200 text-center space-y-3">
+                <i class="fa-solid fa-truck-fast text-brand-600 text-3xl"></i>
+                <h2 class="text-xl font-bold text-gray-900">Track Order</h2>
+                <div class="flex gap-2">
+                    <input type="text" id="track-order-id" placeholder="Order ID (e.g. ORD-1029)"
+                        class="flex-grow px-3 py-2 text-xs border border-gray-300 rounded-xl outline-none uppercase font-bold">
+                    <button onclick="trackOrder()"
+                        class="bg-brand-600 text-white font-bold px-4 py-2 rounded-xl text-xs">
+                        Track
+                    </button>
+                </div>
+                <div id="track-result" class="mt-4 text-left hidden border-t pt-3"></div>
+            </div>
+        </section>
+
+        <!-- MASTER ADMIN DASHBOARD -->
+        <section id="tab-admin" class="tab-content hidden max-w-6xl mx-auto px-3 py-6 space-y-6">
+            <div class="bg-gray-900 text-white p-4 rounded-xl flex justify-between items-center shadow-lg">
+                <div>
+                    <h3 class="font-black text-base text-yellow-400">Master Admin Control Panel</h3>
+                    <p class="text-[11px] text-gray-300">Logged in as Administrator (Rudra)</p>
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="generate1000Catalogs()"
+                        class="bg-gradient-to-r from-amber-500 to-yellow-600 hover:from-amber-600 hover:to-yellow-700 text-black font-black text-xs px-3 py-2 rounded-lg shadow transition">
+                        ⚡ Regenerate 2,000 Catalog Items
+                    </button>
+                    <button onclick="logoutAdmin()"
+                        class="bg-red-700 hover:bg-red-800 text-white text-xs font-bold px-3 py-2 rounded-lg transition">Logout</button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                <!-- Add New Product Form -->
+                <div class="bg-white p-4 rounded-xl border border-gray-200 space-y-3 shadow-sm">
+                    <h4 class="font-bold text-xs uppercase text-brand-600 flex items-center space-x-1 border-b pb-1">
+                        <i class="fa-solid fa-plus-circle"></i>
+                        <span>Add New Catalog Item (Up to 3 Images)</span>
+                    </h4>
+                    <form onsubmit="handleProductAdd(event)" class="space-y-2">
+                        <div>
+                            <label class="block text-[10px] font-bold text-gray-600">Product Title</label>
+                            <input type="text" id="admin-p-title" required placeholder="e.g. Smartphone 5G Pro Max"
+                                class="w-full px-2.5 py-1.5 text-xs border rounded-lg">
+                        </div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label class="block text-[10px] font-bold text-gray-600">Category</label>
+                                <select id="admin-p-cat"
+                                    class="w-full px-2.5 py-1.5 text-xs border rounded-lg bg-white">
+                                    <option value="Electronics">Electronics</option>
+                                    <option value="Women">Women</option>
+                                    <option value="Men">Men</option>
+                                    <option value="Festive">Festive</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-gray-600">Selling Price (₹)</label>
+                                <input type="number" id="admin-p-price" required placeholder="12999"
+                                    class="w-full px-2.5 py-1.5 text-xs border rounded-lg">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold text-gray-600">Main Image URL (Image 1)</label>
+                            <input type="url" id="admin-p-img1" required placeholder="https://..."
+                                class="w-full px-2.5 py-1.5 text-xs border rounded-lg">
+                        </div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label class="block text-[10px] font-bold text-gray-600">Image 2 URL (Optional)</label>
+                                <input type="url" id="admin-p-img2" placeholder="https://..."
+                                    class="w-full px-2.5 py-1.5 text-xs border rounded-lg">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-gray-600">Image 3 URL (Optional)</label>
+                                <input type="url" id="admin-p-img3" placeholder="https://..."
+                                    class="w-full px-2.5 py-1.5 text-xs border rounded-lg">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold text-gray-600">Full Description</label>
+                            <textarea id="admin-p-desc" rows="2" placeholder="Write item specifications..."
+                                class="w-full px-2.5 py-1.5 text-xs border rounded-lg"></textarea>
+                        </div>
+                        <button type="submit"
+                            class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-2 rounded-lg text-xs shadow">
+                            + Add Product to Live Store
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Payment Details Setup -->
+                <div class="bg-white p-4 rounded-xl border border-gray-200 space-y-3 shadow-sm">
+                    <h4 class="font-bold text-xs uppercase text-blue-600 flex items-center space-x-1 border-b pb-1">
+                        <i class="fa-solid fa-wallet"></i>
+                        <span>Payment & QR Scanner Setup</span>
+                    </h4>
+                    <div class="space-y-2 text-xs">
+                        <div>
+                            <label class="block text-[10px] font-bold text-gray-600">UPI ID</label>
+                            <input type="text" id="admin-upi-id" value="bikki708@ptaxis"
+                                class="w-full px-2.5 py-1.5 border rounded-lg font-bold text-gray-800">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold text-gray-600">Payee Name</label>
+                            <input type="text" id="admin-upi-name" value="bikki kumar das"
+                                class="w-full px-2.5 py-1.5 border rounded-lg">
+                        </div>
+
+                        <div>
+                            <label class="block text-[10px] font-bold text-blue-700">Upload Custom QR Scanner Image
+                                (File)</label>
+                            <input type="file" id="admin-qr-file" accept="image/*" onchange="handleQrUpload(event)"
+                                class="w-full px-2 py-1 text-[10px] border rounded-lg bg-gray-50">
+                        </div>
+
+                        <div>
+                            <label class="block text-[10px] font-bold text-gray-600">Bank & A/C No.</label>
+                            <input type="text" id="admin-bank-acc" value="Kotak Mahindra Bank - A/C: 5151073620"
+                                class="w-full px-2.5 py-1.5 border rounded-lg">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold text-gray-600">IFSC Code & Phone</label>
+                            <input type="text" id="admin-bank-ifsc" value="KKBK0000152 (Ph: 8002322367)"
+                                class="w-full px-2.5 py-1.5 border rounded-lg">
+                        </div>
+                        <button onclick="saveAllPaymentConfig()"
+                            class="w-full bg-gray-900 hover:bg-black text-white font-bold py-2 rounded-lg text-xs shadow">
+                            Save Payment Settings
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- LIVE CATALOG EDITABLE TABLE WITH MULTI-IMAGES CONTROL -->
+            <div class="bg-white p-4 rounded-xl border border-gray-200 space-y-3 shadow-sm">
+                <div class="flex justify-between items-center border-b pb-2">
+                    <div>
+                        <h4 class="font-bold text-xs uppercase text-gray-800">Live Catalog Management (<span
+                                id="admin-product-count">0</span> Items)</h4>
+                        <p class="text-[10px] text-gray-500">Aap har product ka Title, Price, Description aur teeno
+                            Image URLs ko badal kar "Save Changes" dabayein.</p>
+                    </div>
+                </div>
+
+                <div class="max-h-96 overflow-y-auto border rounded-xl overflow-x-auto">
+                    <table class="w-full text-left text-xs min-w-[700px]">
+                        <thead class="bg-gray-900 text-white uppercase font-bold text-[10px] sticky top-0 z-10">
+                            <tr>
+                                <th class="p-2.5">Title</th>
+                                <th class="p-2.5">Price (₹)</th>
+                                <th class="p-2.5">Image 1 URL</th>
+                                <th class="p-2.5">Image 2 URL</th>
+                                <th class="p-2.5">Image 3 URL</th>
+                                <th class="p-2.5 text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-product-table" class="divide-y text-[11px] bg-white"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- CUSTOMER ORDERS LIST WITH STATUS VERIFICATION DROPDOWN -->
+            <div class="bg-white p-4 rounded-xl border border-gray-200 space-y-3 shadow-sm">
+                <div class="flex justify-between items-center border-b pb-2">
+                    <h4 class="font-bold text-xs uppercase text-gray-800">Customer Received Orders & Status Management
+                    </h4>
+                    <span class="text-[10px] bg-yellow-100 text-yellow-800 font-bold px-2 py-0.5 rounded-full">Order
+                        Verification Center</span>
+                </div>
+                <div id="admin-orders-list" class="space-y-3"></div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- PRODUCT DETAIL MODAL -->
+    <div id="product-detail-modal"
+        class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-2 sm:p-4 overflow-y-auto">
+        <div class="bg-white w-full max-w-3xl rounded-2xl overflow-hidden shadow-2xl my-auto">
+
+            <div class="bg-gray-900 text-white p-3 flex justify-between items-center sticky top-0 z-20">
+                <h3 id="modal-product-title" class="font-bold text-xs truncate">Product Page Details</h3>
+                <button onclick="closeProductDetailModal()" class="text-gray-300 hover:text-white"><i
+                        class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+
+            <div class="p-4 space-y-5 max-h-[85vh] overflow-y-auto text-xs">
+
+                <!-- Product Overview -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+                    <div class="space-y-2">
+                        <div class="aspect-square bg-gray-100 rounded-2xl overflow-hidden border">
+                            <img id="modal-main-img" src="" class="w-full h-full object-cover">
+                        </div>
+                        <div id="modal-thumbnails-container" class="flex space-x-2 overflow-x-auto py-1"></div>
+                    </div>
+
+                    <div class="space-y-3 flex flex-col justify-between">
+                        <div class="space-y-2">
+                            <span id="modal-product-cat"
+                                class="bg-brand-50 text-brand-600 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full border">Category</span>
+                            <h2 id="modal-product-name" class="text-lg font-black text-gray-900 leading-snug">Product
+                                Name</h2>
+
+                            <div class="flex items-baseline space-x-2">
+                                <span id="modal-product-price" class="text-xl font-black text-brand-600">₹0</span>
+                                <span id="modal-product-oldprice" class="text-xs text-gray-400 line-through">₹0</span>
+                                <span id="modal-product-discount"
+                                    class="text-[10px] bg-green-100 text-green-700 font-bold px-2 py-0.5 rounded">0%
+                                    OFF</span>
+                            </div>
+
+                            <p id="modal-product-desc"
+                                class="text-gray-600 text-xs leading-relaxed bg-gray-50 p-2.5 rounded-xl border">
+                                High quality premium item with 100% genuine guarantee.
+                            </p>
+
+                            <div class="text-[11px] space-y-1 text-gray-700 pt-1">
+                                <p class="flex items-center gap-1.5"><i
+                                        class="fa-solid fa-truck-fast text-brand-600"></i> Free Express Home Delivery
+                                </p>
+                                <p class="flex items-center gap-1.5"><i
+                                        class="fa-solid fa-shield-halved text-green-600"></i> 7 Days Replacement Policy
+                                </p>
+                            </div>
+                        </div>
+
+                        <button id="modal-btn-buy" onclick=""
+                            class="w-full bg-brand-600 hover:bg-brand-700 text-white font-black py-3 rounded-xl text-xs shadow-lg transition">
+                            + Buy Now / Proceed to Checkout
+                        </button>
+                    </div>
+                </div>
+
+                <hr>
+
+                <!-- Customer Ratings & Reviews -->
+                <div class="space-y-3">
+                    <div class="flex justify-between items-center">
+                        <h3 class="font-extrabold text-sm text-gray-900">Customer Ratings & Reviews ⭐</h3>
+                        <button onclick="toggleReviewForm()"
+                            class="bg-gray-100 hover:bg-gray-200 text-brand-600 font-bold px-3 py-1 rounded-lg text-[11px] border">
+                            + Write a Review
+                        </button>
+                    </div>
+
+                    <!-- Review Form -->
+                    <form id="add-review-form" onsubmit="submitCustomerReview(event)"
+                        class="hidden bg-gray-50 p-3 rounded-xl border border-gray-200 space-y-2">
+                        <p class="font-bold text-[11px] text-gray-800">Add Your Experience:</p>
+                        <div class="grid grid-cols-2 gap-2">
+                            <input type="text" id="rev-user-name" required placeholder="Your Name"
+                                class="px-2.5 py-1.5 border rounded-lg text-xs">
+                            <input type="number" id="rev-user-age" required placeholder="Your Age"
+                                class="px-2.5 py-1.5 border rounded-lg text-xs">
+                        </div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <select id="rev-user-rating"
+                                class="px-2.5 py-1.5 border rounded-lg text-xs bg-white font-bold">
+                                <option value="5">⭐⭐⭐⭐⭐ (5/5)</option>
+                                <option value="4">⭐⭐⭐⭐ (4/5)</option>
+                                <option value="3">⭐⭐⭐ (3/5)</option>
+                            </select>
+                            <input type="file" id="rev-user-img" accept="image/*"
+                                class="px-2 py-1 border rounded-lg text-[10px] bg-white">
+                        </div>
+                        <textarea id="rev-user-comment" required rows="2" placeholder="Write feedback..."
+                            class="w-full px-2.5 py-1.5 border rounded-lg text-xs"></textarea>
+                        <button type="submit" class="w-full bg-gray-900 text-white font-bold py-1.5 rounded-lg text-xs">
+                            Submit Review
+                        </button>
+                    </form>
+
+                    <div id="modal-reviews-container" class="space-y-2"></div>
+                </div>
+
+                <hr>
+
+                <!-- Recommended Items Section -->
+                <div class="space-y-3 pt-2">
+                    <div class="flex justify-between items-center">
+                        <h3 class="font-extrabold text-sm text-gray-900">Recommended Products 🔥</h3>
+                        <span id="rec-count-badge"
+                            class="text-[10px] font-bold text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full border">Showing
+                            Items</span>
+                    </div>
+
+                    <div id="recommended-products-grid" class="grid grid-cols-2 sm:grid-cols-4 gap-3"></div>
+
+                    <div class="text-center pt-2">
+                        <button id="btn-load-more-rec" onclick="loadMoreRecommended()"
+                            class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold px-4 py-1.5 rounded-lg text-[11px] border">
+                            Show More Recommendations
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- PROFESSIONAL CART DRAWER -->
+    <div id="cart-drawer" class="fixed inset-0 bg-black/60 z-50 transition-opacity opacity-0 pointer-events-none">
+        <div class="absolute inset-y-0 right-0 max-w-full flex">
+            <div id="cart-drawer-panel"
+                class="w-screen max-w-sm bg-white shadow-2xl flex flex-col justify-between transform translate-x-full transition-transform duration-300">
+
+                <div class="p-4 bg-gray-900 text-white flex justify-between items-center border-b border-gray-800">
+                    <div class="flex items-center space-x-2">
+                        <i class="fa-solid fa-cart-shopping text-brand-500"></i>
+                        <h2 class="text-sm font-bold tracking-wide">Your Shopping Cart</h2>
+                    </div>
+                    <button onclick="toggleCartDrawer(false)" class="text-gray-400 hover:text-white p-1"><i
+                            class="fa-solid fa-xmark text-lg"></i></button>
+                </div>
+
+                <div id="cart-items-container" class="flex-1 overflow-y-auto p-4 space-y-3 divide-y divide-gray-100">
+                </div>
+
+                <div class="p-4 bg-gray-50 border-t border-gray-200 space-y-3 text-xs">
+                    <div class="space-y-1.5 text-gray-600 text-[11px]">
+                        <div class="flex justify-between">
+                            <span>Subtotal:</span>
+                            <span id="cart-subtotal" class="font-bold text-gray-800">₹0</span>
+                        </div>
+                        <div class="flex justify-between text-green-700 font-medium">
+                            <span>Delivery Fee:</span>
+                            <span class="font-bold">FREE</span>
+                        </div>
+                        <div class="flex justify-between font-black text-sm text-gray-900 border-t pt-1.5">
+                            <span>Total Payable:</span>
+                            <span id="cart-total" class="text-brand-600">₹0</span>
+                        </div>
+                    </div>
+
+                    <button onclick="openCheckoutModal()" id="btn-proceed-checkout" disabled
+                        class="w-full bg-brand-600 hover:bg-brand-700 disabled:bg-gray-300 text-white font-bold py-3 rounded-xl text-xs shadow-md flex items-center justify-center space-x-2 transition">
+                        <span>Proceed to Billing & Checkout</span>
+                        <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- PROFESSIONAL CHECKOUT MODAL -->
+    <div id="checkout-modal"
+        class="fixed inset-0 bg-black/75 z-50 hidden flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
+        <div class="bg-white w-full max-w-md rounded-2xl overflow-hidden shadow-2xl my-auto">
+
+            <div
+                class="bg-gradient-to-r from-gray-900 via-brand-900 to-gray-900 text-white p-3.5 flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-shield-halved text-yellow-400 text-sm"></i>
+                    <h3 class="font-bold text-xs">Secure Checkout & Verification</h3>
+                </div>
+                <button onclick="closeCheckoutModal()" class="text-gray-300 hover:text-white"><i
+                        class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <form id="checkout-form" onsubmit="handlePlaceOrder(event)"
+                class="p-4 space-y-3.5 max-h-[82vh] overflow-y-auto text-xs">
+
+                <div class="bg-brand-50/50 border border-brand-100 p-3 rounded-xl space-y-1.5">
+                    <div class="flex justify-between items-center border-b border-brand-100 pb-1">
+                        <span class="font-extrabold text-[11px] text-brand-900">Order Summary</span>
+                        <span id="checkout-item-count"
+                            class="text-[10px] font-bold bg-brand-100 text-brand-700 px-2 py-0.5 rounded-full">0
+                            Items</span>
+                    </div>
+                    <div id="checkout-summary-items"
+                        class="space-y-1 max-h-24 overflow-y-auto text-[10px] text-gray-700 pr-1"></div>
+                    <div class="flex justify-between font-black text-gray-900 text-xs pt-1.5 border-t border-brand-100">
+                        <span>Grand Total Amount:</span>
+                        <span id="checkout-total-display" class="text-brand-600 text-sm">₹0</span>
+                    </div>
+                </div>
+
+                <div class="space-y-2">
+                    <p class="font-bold text-gray-800 flex items-center gap-1.5">
+                        <span
+                            class="w-4 h-4 bg-gray-900 text-white rounded-full flex items-center justify-center text-[9px]">1</span>
+                        <span>Delivery Address Details:</span>
+                    </p>
+                    <input type="text" id="cust-name" required placeholder="Full Name"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs outline-none focus:border-brand-500">
+                    <div class="grid grid-cols-2 gap-2">
+                        <input type="tel" id="cust-phone" required pattern="[0-9]{10}"
+                            placeholder="Phone No. (10 digits)"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs outline-none focus:border-brand-500">
+                        <input type="text" id="cust-pincode" required placeholder="Pincode"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs outline-none focus:border-brand-500">
+                    </div>
+                    <textarea id="cust-address" required rows="2"
+                        placeholder="Complete Street Address with Village / Landmark"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs outline-none focus:border-brand-500"></textarea>
+                </div>
+
+                <div class="pt-2 border-t space-y-2">
+                    <p class="font-bold text-gray-800 flex items-center gap-1.5">
+                        <span
+                            class="w-4 h-4 bg-gray-900 text-white rounded-full flex items-center justify-center text-[9px]">2</span>
+                        <span>Payment Gateway Option:</span>
+                    </p>
+
+                    <div class="grid grid-cols-2 gap-2">
+                        <label
+                            class="border-2 rounded-xl p-2 text-center cursor-pointer transition border-brand-500 bg-brand-50/30">
+                            <input type="radio" name="payment_method" value="UPI / QR Code" checked
+                                onclick="togglePaymentView('UPI')" class="sr-only">
+                            <span class="font-bold text-[11px] text-brand-900 block">📲 Instant UPI / QR</span>
+                        </label>
+                        <label
+                            class="border-2 rounded-xl p-2 text-center cursor-pointer transition border-gray-200 bg-gray-50">
+                            <input type="radio" name="payment_method" value="Bank Transfer"
+                                onclick="togglePaymentView('BANK')" class="sr-only">
+                            <span class="font-bold text-[11px] text-gray-700 block">🏦 Bank Transfer</span>
+                        </label>
+                    </div>
+
+                    <div id="upi-qr-box"
+                        class="bg-gradient-to-b from-blue-50 to-white border border-blue-200 p-3 rounded-xl text-center space-y-2 shadow-inner">
+                        <img id="upi-qr-image" src=""
+                            class="w-36 h-36 mx-auto rounded-lg border bg-white p-1 object-contain shadow-sm">
+                        <p class="font-bold text-[11px] text-gray-800">Payee: <span id="display-payee-name"
+                                class="text-blue-900">bikki kumar das</span></p>
+                        <p class="font-mono text-brand-600 font-bold text-[11px]">UPI ID: <span
+                                id="display-upi-id">bikki708@ptaxis</span></p>
+                        <a id="direct-upi-link" href="#" target="_blank"
+                            class="block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded-lg text-[11px] shadow transition">
+                            📲 Tap to Open Google Pay / Paytm / PhonePe
+                        </a>
+                    </div>
+
+                    <div id="bank-box"
+                        class="hidden bg-purple-50 border border-purple-200 p-3 rounded-xl space-y-1 text-[11px]">
+                        <p><strong>A/C Details:</strong> <span id="display-bank-acc">Kotak Mahindra Bank - A/C:
+                                5151073620</span></p>
+                        <p><strong>IFSC Code:</strong> <span id="display-bank-ifsc">KKBK0000152 (Ph: 8002322367)</span>
+                        </p>
+                    </div>
+
+                    <div class="bg-amber-50 border border-amber-300 p-2.5 rounded-xl space-y-1 mt-2">
+                        <label class="block font-bold text-gray-900 text-[11px]">
+                            3. Enter 12-Digit UTR / Transaction Reference ID:
+                        </label>
+                        <input type="text" id="payment-utr-input" required maxlength="12"
+                            placeholder="e.g. 402910839210"
+                            class="w-full px-3 py-2 border rounded-lg font-mono font-bold text-gray-900 text-xs bg-white uppercase outline-none focus:ring-2 focus:ring-amber-500">
+                    </div>
+                </div>
+
+                <button type="submit"
+                    class="w-full bg-brand-600 hover:bg-brand-700 text-white font-black py-3 rounded-xl shadow-lg text-xs transition uppercase tracking-wider">
+                    Verify & Confirm Order
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- SUCCESS MODAL -->
+    <div id="success-modal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-xs rounded-2xl p-5 text-center space-y-3 shadow-2xl">
+            <i class="fa-solid fa-clock-rotate-left text-amber-500 text-4xl animate-pulse"></i>
+            <h3 class="text-lg font-black text-gray-900">Order Placed! ⏳</h3>
+            <p class="text-xs text-gray-600">Order Reference: <span id="confirmed-order-id"
+                    class="font-mono font-bold text-brand-600"></span></p>
+            <p class="text-[11px] text-amber-800 bg-amber-50 p-2.5 rounded-xl border border-amber-200">
+                Aapki order request receive ho gayi hai! Admin verification ke baad status update kar diya jayega.
+            </p>
+            <button onclick="closeSuccessModal()"
+                class="w-full bg-gray-900 hover:bg-black text-white font-bold py-2.5 rounded-xl text-xs transition">
+                Return to Shop
+            </button>
+        </div>
+    </div>
+
+    <!-- ADMIN AUTH MODAL -->
+    <div id="admin-auth-modal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-xs rounded-2xl p-5 space-y-3 text-center">
+            <h3 class="text-lg font-bold">Master Admin Login</h3>
+            <form onsubmit="handleAdminLogin(event)" class="space-y-2">
+                <input type="text" id="admin-user-input" required placeholder="Username"
+                    class="w-full px-3 py-2 text-xs border rounded-lg outline-none">
+                <input type="password" id="admin-pass-input" required placeholder="Password"
+                    class="w-full px-3 py-2 text-xs border rounded-lg outline-none">
+                <div id="admin-auth-error" class="hidden text-[10px] text-red-600 font-bold">Invalid Credentials!</div>
+                <div class="flex gap-2 pt-2">
+                    <button type="button" onclick="closeAdminAuthModal()"
+                        class="w-1/2 bg-gray-100 text-xs py-2 rounded-lg font-bold">Cancel</button>
+                    <button type="submit"
+                        class="w-1/2 bg-gray-900 text-white text-xs py-2 rounded-lg font-bold">Login</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bottom Mobile Nav -->
+    <div
+        class="fixed bottom-0 inset-x-0 bg-white border-t border-gray-200 py-2 px-6 flex justify-around items-center z-30 sm:hidden">
+        <button onclick="switchTab('shop')" class="flex flex-col items-center text-brand-600 font-bold">
+            <i class="fa-solid fa-store text-lg"></i>
+            <span class="text-[9px] mt-0.5">Store</span>
+        </button>
+        <button onclick="switchTab('track')" class="flex flex-col items-center text-gray-500">
+            <i class="fa-solid fa-truck-fast text-lg"></i>
+            <span class="text-[9px] mt-0.5">Track</span>
+        </button>
+        <button onclick="toggleCartDrawer(true)" class="flex flex-col items-center text-gray-500 relative">
+            <i class="fa-solid fa-bag-shopping text-lg"></i>
+            <span class="text-[9px] mt-0.5">Cart</span>
+        </button>
+    </div>
+
+    <!-- MASTER JS ENGINE -->
+    <script>
+        const ELECTRONICS_IMAGES = [
+            [
+                "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=600&q=80",
+                "https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?auto=format&fit=crop&w=600&q=80",
+                "https://images.unsplash.com/photo-1580910051074-3eb694886505?auto=format&fit=crop&w=600&q=80"
+            ],
+            [
+                "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&w=600&q=80",
+                "https://images.unsplash.com/photo-1572536147248-ac59a8abfa4b?auto=format&fit=crop&w=600&q=80",
+                "https://images.unsplash.com/photo-1606220588913-b3aacb4d2f46?auto=format&fit=crop&w=600&q=80"
+            ]
+        ];
+
+        const FASHION_IMAGES = [
+            "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=600&q=80",
+            "https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=600&q=80",
+            "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=600&q=80"
+        ];
+
+        const ELECTRONICS_NAMES = ["Smartphone 5G Pro Max", "Wireless TWS AirDopes", "Smartwatch Ultra HD Display"];
+        const CLOTH_NAMES = { Women: ["Anarkali Suit Set"], Men: ["Silk Kurta Pyjama"], Festive: ["Sherwani Set"] };
+
+        const REVIEW_NAMES = ["Rohan Sharma", "Priya Singh", "Amit Kumar", "Ananya Roy", "Sneha Patel", "Rahul Verma"];
+        const CLOTH_REVIEWS = ["Fabric bohot mast hai!", "Color photo jaisa hi hai.", "Super 2-day delivery! Loved it!"];
+        const ELECTRONICS_REVIEWS = ["Battery backup super solid!", "Best value electronics gadget.", "Superb performance!"];
+
+        let products = [];
+        let cart = [];
+        let orders = [];
+        let currentCategory = 'All';
+        let displayLimit = 20;
+        let recommendedLimit = 12;
+        let activeDetailProductId = null;
+        let isAdminLoggedIn = false;
+
+        let paymentSettings = {
+            upiId: "bikki708@ptaxis",
+            payeeName: "bikki kumar das",
+            bankAcc: "Kotak Mahindra Bank - A/C: 5151073620",
+            bankIfsc: "KKBK0000152 (Ph: 8002322367)",
+            customQrBase64: ""
+        };
+
+        function initStore() {
+            const storedProds = localStorage.getItem('desi_products_v7_master');
+            if (storedProds) {
+                try { products = JSON.parse(storedProds); } catch (e) { products = []; }
+            }
+            if (!products || products.length === 0) {
+                generate1000Catalogs(false);
+            }
+
+            const storedOrders = localStorage.getItem('desi_orders');
+            if (storedOrders) {
+                try { orders = JSON.parse(storedOrders); } catch (e) { orders = []; }
+            }
+
+            const storedPayment = localStorage.getItem('desi_payment_settings');
+            if (storedPayment) {
+                try {
+                    paymentSettings = JSON.parse(storedPayment);
+                    document.getElementById('admin-upi-id').value = paymentSettings.upiId;
+                    document.getElementById('admin-upi-name').value = paymentSettings.payeeName;
+                    document.getElementById('admin-bank-acc').value = paymentSettings.bankAcc;
+                    document.getElementById('admin-bank-ifsc').value = paymentSettings.bankIfsc;
+                } catch (e) { }
+            }
+
+            renderProducts();
+            renderAdminProducts();
+            renderAdminOrders();
+            updateCartBadge();
+        }
+
+        function generate1000Catalogs(alertUser = true) {
+            products = [];
+
+            for (let i = 1; i <= 1000; i++) {
+                const name = ELECTRONICS_NAMES[i % ELECTRONICS_NAMES.length];
+                const basePrice = 799 + ((i * 83) % 25000);
+
+                products.push({
+                    id: 5000 + i,
+                    title: `${name} #${1000 + i}`,
+                    category: "Electronics",
+                    price: basePrice,
+                    oldPrice: basePrice + 1200,
+                    images: ELECTRONICS_IMAGES[i % ELECTRONICS_IMAGES.length],
+                    description: "High performance premium electronics device with 1 Year Warranty and Express Delivery.",
+                    reviewsList: [
+                        { name: REVIEW_NAMES[i % REVIEW_NAMES.length], age: 24, rating: 5, comment: ELECTRONICS_REVIEWS[i % ELECTRONICS_REVIEWS.length], img: "" }
+                    ]
+                });
+            }
+
+            for (let i = 1; i <= 1000; i++) {
+                const cat = (i % 2 === 0) ? "Women" : "Men";
+                const title = `Desi ${CLOTH_NAMES[cat][0]} #${1000 + i}`;
+                const basePrice = 399 + ((i * 37) % 2100);
+
+                products.push({
+                    id: 2000 + i,
+                    title: title,
+                    category: cat,
+                    price: basePrice,
+                    oldPrice: basePrice + 500,
+                    images: FASHION_IMAGES,
+                    description: "Pure quality ethnic wear fabric with rich look and smooth finish.",
+                    reviewsList: [
+                        { name: REVIEW_NAMES[(i + 2) % REVIEW_NAMES.length], age: 22, rating: 5, comment: CLOTH_REVIEWS[i % CLOTH_REVIEWS.length], img: "" }
+                    ]
+                });
+            }
+
+            localStorage.setItem('desi_products_v7_master', JSON.stringify(products));
+            renderProducts();
+            renderAdminProducts();
+            if (alertUser) alert("⚡ 2,000 Products Catalog Generated Successfully!");
+        }
+
+        function renderProducts() {
+            const grid = document.getElementById('product-grid');
+            if (!grid) return;
+            grid.innerHTML = '';
+            const searchVal = document.getElementById('search-input').value.toLowerCase();
+
+            const filtered = products.filter(p => {
+                const matchesCat = (currentCategory === 'All') || (p.category === currentCategory);
+                return matchesCat && p.title.toLowerCase().includes(searchVal);
+            });
+
+            document.getElementById('cat-count-all').innerText = products.length;
+            document.getElementById('total-count-display').innerText = filtered.length;
+
+            const visibleItems = filtered.slice(0, displayLimit);
+            document.getElementById('showing-count').innerText = visibleItems.length;
+
+            visibleItems.forEach(p => {
+                const discount = Math.round(((p.oldPrice - p.price) / p.oldPrice) * 100);
+                const mainImg = p.images && p.images.length > 0 ? p.images[0] : 'https://via.placeholder.com/300';
+                const firstRev = (p.reviewsList && p.reviewsList.length > 0) ? p.reviewsList[0] : null;
+
+                const card = document.createElement('div');
+                card.className = "bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm flex flex-col justify-between cursor-pointer hover:shadow-md transition";
+
+                card.innerHTML = `
+                    <div onclick="openProductDetailModal(${p.id})">
+                        <div class="relative aspect-square overflow-hidden bg-gray-100">
+                            <img src="${mainImg}" alt="${p.title}" class="w-full h-full object-cover">
+                            <span class="absolute top-1.5 left-1.5 bg-brand-600 text-white text-[9px] font-bold px-1.5 py-0.5 rounded shadow">
+                                ${discount}% OFF
+                            </span>
+                        </div>
+                        <div class="p-2 space-y-1">
+                            <h3 class="font-bold text-[11px] text-gray-900 line-clamp-1">${p.title}</h3>
+                            <div class="flex items-baseline space-x-1.5">
+                                <span class="text-xs font-black text-brand-600">₹${p.price}</span>
+                                <span class="text-[10px] text-gray-400 line-through">₹${p.oldPrice}</span>
+                            </div>
+
+                            ${firstRev ? `
+                            <div class="bg-gray-50 p-1.5 rounded-lg border border-gray-100 text-[9px] space-y-0.5">
+                                <div class="flex justify-between items-center font-bold text-gray-800">
+                                    <span class="truncate">${firstRev.name} (${firstRev.age}y)</span>
+                                    <span class="text-amber-500 font-extrabold shrink-0">★ ${firstRev.rating}</span>
+                                </div>
+                                <p class="text-gray-500 italic line-clamp-1">"${firstRev.comment}"</p>
+                            </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                    <div class="p-2 pt-1">
+                        <button onclick="addToCartAndCheckout(${p.id})" class="w-full bg-gray-900 hover:bg-brand-600 text-white font-bold py-1.5 rounded-lg text-[10px] transition">
+                            + Add to Cart & Buy
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+
+            document.getElementById('btn-load-more').classList.toggle('hidden', filtered.length <= displayLimit);
+        }
+
+        // OPEN PRODUCT MODAL
+        function openProductDetailModal(id) {
+            const p = products.find(prod => prod.id === id);
+            if (!p) return;
+
+            activeDetailProductId = id;
+            recommendedLimit = 12;
+
+            document.getElementById('modal-product-title').innerText = p.title;
+            document.getElementById('modal-product-name').innerText = p.title;
+            document.getElementById('modal-product-cat').innerText = p.category;
+            document.getElementById('modal-product-price').innerText = `₹${p.price}`;
+            document.getElementById('modal-product-oldprice').innerText = `₹${p.oldPrice}`;
+            document.getElementById('modal-product-desc').innerText = p.description || "High quality item.";
+
+            const discount = Math.round(((p.oldPrice - p.price) / p.oldPrice) * 100);
+            document.getElementById('modal-product-discount').innerText = `${discount}% OFF`;
+
+            const mainImgEl = document.getElementById('modal-main-img');
+            const thumbsContainer = document.getElementById('modal-thumbnails-container');
+            thumbsContainer.innerHTML = '';
+
+            const imgs = (p.images && p.images.length > 0) ? p.images : ['https://via.placeholder.com/300'];
+            mainImgEl.src = imgs[0];
+
+            imgs.forEach((imgUrl, index) => {
+                const thumb = document.createElement('img');
+                thumb.src = imgUrl;
+                thumb.className = `w-12 h-12 object-cover rounded-lg border-2 cursor-pointer ${index === 0 ? 'border-brand-600' : 'border-gray-200'}`;
+                thumb.onclick = function () {
+                    mainImgEl.src = imgUrl;
+                    document.querySelectorAll('#modal-thumbnails-container img').forEach(t => t.classList.replace('border-brand-600', 'border-gray-200'));
+                    thumb.classList.replace('border-gray-200', 'border-brand-600');
+                };
+                thumbsContainer.appendChild(thumb);
+            });
+
+            document.getElementById('modal-btn-buy').onclick = function () {
+                closeProductDetailModal();
+                addToCartAndCheckout(p.id);
+            };
+
+            renderModalReviews(p);
+            renderRecommendedProducts(p);
+            document.getElementById('product-detail-modal').classList.remove('hidden');
+        }
+
+        function closeProductDetailModal() {
+            document.getElementById('product-detail-modal').classList.add('hidden');
+            document.getElementById('add-review-form').classList.add('hidden');
+        }
+
+        function renderRecommendedProducts(currentProduct) {
+            const container = document.getElementById('recommended-products-grid');
+            container.innerHTML = '';
+
+            const allRecommended = products.filter(p => p.id !== currentProduct.id);
+            const visibleRecs = allRecommended.slice(0, recommendedLimit);
+
+            document.getElementById('rec-count-badge').innerText = `Showing ${visibleRecs.length} of ${allRecommended.length} Items`;
+
+            visibleRecs.forEach(rec => {
+                const img = rec.images && rec.images.length > 0 ? rec.images[0] : 'https://via.placeholder.com/150';
+                const div = document.createElement('div');
+                div.className = "bg-gray-50 border p-2 rounded-xl text-center space-y-1 cursor-pointer hover:shadow transition";
+                div.onclick = function () { openProductDetailModal(rec.id); };
+                div.innerHTML = `
+                    <img src="${img}" class="w-full aspect-square object-cover rounded-lg">
+                    <p class="font-bold text-[10px] text-gray-800 line-clamp-1">${rec.title}</p>
+                    <p class="text-brand-600 font-black text-xs">₹${rec.price}</p>
+                `;
+                container.appendChild(div);
+            });
+
+            document.getElementById('btn-load-more-rec').classList.toggle('hidden', allRecommended.length <= recommendedLimit);
+        }
+
+        function loadMoreRecommended() {
+            recommendedLimit += 20;
+            const product = products.find(p => p.id === activeDetailProductId);
+            if (product) renderRecommendedProducts(product);
+        }
+
+        function toggleReviewForm() { document.getElementById('add-review-form').classList.toggle('hidden'); }
+
+        function renderModalReviews(product) {
+            const container = document.getElementById('modal-reviews-container');
+            container.innerHTML = '';
+
+            const list = product.reviewsList || [];
+            if (list.length === 0) {
+                container.innerHTML = `<p class="text-gray-400 text-[10px] text-center">No reviews yet.</p>`;
+                return;
+            }
+
+            list.forEach(r => {
+                const div = document.createElement('div');
+                div.className = "bg-gray-50 p-2.5 rounded-xl border space-y-1";
+                div.innerHTML = `
+                    <div class="flex justify-between items-center">
+                        <span class="font-bold text-gray-900 text-[11px]">${r.name} (${r.age} yrs)</span>
+                        <span class="text-amber-500 font-bold text-[10px]">${'★'.repeat(r.rating)}</span>
+                    </div>
+                    <p class="text-gray-700 text-[11px]">${r.comment}</p>
+                    ${r.img ? `<img src="${r.img}" class="w-16 h-16 object-cover rounded-lg border mt-1">` : ''}
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function submitCustomerReview(e) {
+            e.preventDefault();
+            const product = products.find(p => p.id === activeDetailProductId);
+            if (!product) return;
+
+            const name = document.getElementById('rev-user-name').value;
+            const age = document.getElementById('rev-user-age').value;
+            const rating = parseInt(document.getElementById('rev-user-rating').value);
+            const comment = document.getElementById('rev-user-comment').value;
+            const imgFile = document.getElementById('rev-user-img').files[0];
+
+            let imgBase64 = "";
+
+            const saveReview = () => {
+                if (!product.reviewsList) product.reviewsList = [];
+                product.reviewsList.unshift({ name, age, rating, comment, img: imgBase64 });
+                localStorage.setItem('desi_products_v7_master', JSON.stringify(products));
+                renderModalReviews(product);
+                toggleReviewForm();
+                renderProducts();
+                alert("✅ Review Added Successfully!");
+            };
+
+            if (imgFile) {
+                const reader = new FileReader();
+                reader.onload = function (evt) {
+                    imgBase64 = evt.target.result;
+                    saveReview();
+                };
+                reader.readAsDataURL(imgFile);
+            } else {
+                saveReview();
+            }
+        }
+
+        // CART & CHECKOUT
+        function addToCartAndCheckout(id) {
+            const product = products.find(p => p.id === id);
+            if (!product) return;
+
+            const item = cart.find(i => i.id === id);
+            if (item) item.qty += 1;
+            else cart.push({ ...product, qty: 1 });
+
+            updateCartBadge();
+            renderCartDrawer();
+            openCheckoutModal();
+        }
+
+        function updateCartBadge() {
+            const count = cart.reduce((s, i) => s + i.qty, 0);
+            document.getElementById('cart-count-badge').innerText = count;
+            document.getElementById('btn-proceed-checkout').disabled = cart.length === 0;
+        }
+
+        function toggleCartDrawer(open) {
+            const drawer = document.getElementById('cart-drawer');
+            const panel = document.getElementById('cart-drawer-panel');
+            if (open === true || drawer.classList.contains('opacity-0')) {
+                drawer.classList.remove('opacity-0', 'pointer-events-none');
+                panel.classList.remove('translate-x-full');
+            } else {
+                drawer.classList.add('opacity-0', 'pointer-events-none');
+                panel.classList.add('translate-x-full');
+            }
+        }
+
+        function renderCartDrawer() {
+            const container = document.getElementById('cart-items-container');
+            container.innerHTML = '';
+            let total = 0;
+
+            if (cart.length === 0) {
+                container.innerHTML = `<div class="text-center py-10 text-gray-400 text-xs"><i class="fa-solid fa-bag-shopping text-3xl mb-2"></i><p>Your cart is empty.</p></div>`;
+            } else {
+                cart.forEach((item, index) => {
+                    total += item.price * item.qty;
+                    const img = item.images && item.images.length > 0 ? item.images[0] : 'https://via.placeholder.com/100';
+                    const div = document.createElement('div');
+                    div.className = "flex space-x-3 pt-3 first:pt-0 items-center";
+                    div.innerHTML = `
+                        <img src="${img}" class="w-14 h-14 object-cover rounded-xl border">
+                        <div class="flex-1 text-xs space-y-1">
+                            <h4 class="font-bold text-gray-900 line-clamp-1">${item.title}</h4>
+                            <p class="text-brand-600 font-extrabold">₹${item.price}</p>
+                            <div class="flex items-center space-x-2">
+                                <button onclick="changeQty(${index}, -1)" class="w-5 h-5 bg-gray-200 text-gray-700 font-bold rounded flex items-center justify-center">-</button>
+                                <span class="font-bold text-gray-800">${item.qty}</span>
+                                <button onclick="changeQty(${index}, 1)" class="w-5 h-5 bg-gray-200 text-gray-700 font-bold rounded flex items-center justify-center">+</button>
+                            </div>
+                        </div>
+                        <button onclick="removeFromCart(${index})" class="text-gray-400 hover:text-red-600 p-1"><i class="fa-solid fa-trash-can"></i></button>
+                    `;
+                    container.appendChild(div);
+                });
+            }
+
+            document.getElementById('cart-subtotal').innerText = `₹${total}`;
+            document.getElementById('cart-total').innerText = `₹${total}`;
+        }
+
+        function changeQty(index, delta) {
+            cart[index].qty += delta;
+            if (cart[index].qty <= 0) cart.splice(index, 1);
+            updateCartBadge();
+            renderCartDrawer();
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartBadge();
+            renderCartDrawer();
+        }
+
+        function openCheckoutModal() {
+            toggleCartDrawer(false);
+            const total = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
+
+            const summaryContainer = document.getElementById('checkout-summary-items');
+            summaryContainer.innerHTML = '';
+            cart.forEach(item => {
+                const p = document.createElement('div');
+                p.className = "flex justify-between py-0.5 border-b border-gray-100 last:border-0";
+                p.innerHTML = `<span>• ${item.title} (x${item.qty})</span><span class="font-bold">₹${item.price * item.qty}</span>`;
+                summaryContainer.appendChild(p);
+            });
+
+            document.getElementById('checkout-item-count').innerText = `${cart.reduce((s, i) => s + i.qty, 0)} Items`;
+            document.getElementById('checkout-total-display').innerText = `₹${total}`;
+            document.getElementById('display-payee-name').innerText = paymentSettings.payeeName;
+            document.getElementById('display-upi-id').innerText = paymentSettings.upiId;
+            document.getElementById('display-bank-acc').innerText = paymentSettings.bankAcc;
+            document.getElementById('display-bank-ifsc').innerText = paymentSettings.bankIfsc;
+
+            setupUpiQr(total);
+            document.getElementById('checkout-modal').classList.remove('hidden');
+        }
+
+        function closeCheckoutModal() { document.getElementById('checkout-modal').classList.add('hidden'); }
+
+        function togglePaymentView(mode) {
+            document.getElementById('upi-qr-box').classList.toggle('hidden', mode !== 'UPI');
+            document.getElementById('bank-box').classList.toggle('hidden', mode !== 'BANK');
+        }
+
+        function setupUpiQr(amount) {
+            const payeeName = encodeURIComponent(paymentSettings.payeeName);
+            const upiUri = `upi://pay?pa=${paymentSettings.upiId}&pn=${payeeName}&am=${amount}&cu=INR&tn=DesiStyleOrder`;
+            document.getElementById('direct-upi-link').href = upiUri;
+
+            if (paymentSettings.customQrBase64) {
+                document.getElementById('upi-qr-image').src = paymentSettings.customQrBase64;
+            } else {
+                document.getElementById('upi-qr-image').src = `https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=${encodeURIComponent(upiUri)}&choe=UTF-8`;
+            }
+        }
+
+        function handlePlaceOrder(e) {
+            e.preventDefault();
+            const utrVal = document.getElementById('payment-utr-input').value.trim();
+            if (utrVal.length < 8) {
+                alert("❌ Please enter valid 12-digit UTR / Ref ID.");
+                return;
+            }
+
+            const orderId = 'ORD-' + Math.floor(1000 + Math.random() * 9000);
+            orders.unshift({
+                orderId,
+                customer: {
+                    name: document.getElementById('cust-name').value,
+                    phone: document.getElementById('cust-phone').value,
+                    address: document.getElementById('cust-address').value,
+                    pincode: document.getElementById('cust-pincode').value
+                },
+                totalAmount: cart.reduce((s, i) => s + (i.price * i.qty), 0),
+                utr: utrVal,
+                paymentMethod: document.querySelector('input[name="payment_method"]:checked').value,
+                status: "Pending Owner Verification ⏳"
+            });
+
+            localStorage.setItem('desi_orders', JSON.stringify(orders));
+            cart = [];
+            updateCartBadge();
+            closeCheckoutModal();
+            document.getElementById('confirmed-order-id').innerText = orderId;
+            document.getElementById('success-modal').classList.remove('hidden');
+            renderAdminOrders();
+        }
+
+        function closeSuccessModal() { document.getElementById('success-modal').classList.add('hidden'); switchTab('shop'); }
+
+        // MASTER ADMIN & LIVE CATALOG FULL ACCESS LOGIC
+        function openAdminAuthModal() {
+            if (isAdminLoggedIn) {
+                switchTab('admin');
+            } else {
+                document.getElementById('admin-auth-modal').classList.remove('hidden');
+            }
+        }
+
+        function closeAdminAuthModal() { document.getElementById('admin-auth-modal').classList.add('hidden'); }
+
+        function handleAdminLogin(e) {
+            e.preventDefault();
+            const u = document.getElementById('admin-user-input').value;
+            const p = document.getElementById('admin-pass-input').value;
+
+            if (u === "Rudra" && p === "Vicky9091") {
+                isAdminLoggedIn = true;
+                closeAdminAuthModal();
+                switchTab('admin');
+                renderAdminProducts();
+                renderAdminOrders();
+            } else {
+                document.getElementById('admin-auth-error').classList.remove('hidden');
+            }
+        }
+
+        function logoutAdmin() { isAdminLoggedIn = false; switchTab('shop'); }
+
+        function handleProductAdd(e) {
+            e.preventDefault();
+            const title = document.getElementById('admin-p-title').value;
+            const category = document.getElementById('admin-p-cat').value;
+            const price = parseFloat(document.getElementById('admin-p-price').value);
+            const img1 = document.getElementById('admin-p-img1').value;
+            const img2 = document.getElementById('admin-p-img2').value;
+            const img3 = document.getElementById('admin-p-img3').value;
+            const desc = document.getElementById('admin-p-desc').value;
+
+            const imgs = [img1];
+            if (img2) imgs.push(img2);
+            if (img3) imgs.push(img3);
+
+            products.unshift({
+                id: Date.now(),
+                title, category, price, oldPrice: price + 400,
+                images: imgs,
+                description: desc || "Premium quality item.",
+                reviewsList: []
+            });
+
+            localStorage.setItem('desi_products_v7_master', JSON.stringify(products));
+            alert("✅ New Product Added Successfully!");
+            renderProducts();
+            renderAdminProducts();
+        }
+
+        // SAVE CHANGES FOR SINGLE LIVE PRODUCT
+        function saveSingleProductRow(id) {
+            const p = products.find(prod => prod.id === id);
+            if (!p) return;
+
+            const title = document.getElementById(`edit-title-${id}`).value.trim();
+            const price = parseFloat(document.getElementById(`edit-price-${id}`).value) || p.price;
+            const img1 = document.getElementById(`edit-img1-${id}`).value.trim();
+            const img2 = document.getElementById(`edit-img2-${id}`).value.trim();
+            const img3 = document.getElementById(`edit-img3-${id}`).value.trim();
+
+            const newImgs = [];
+            if (img1) newImgs.push(img1);
+            if (img2) newImgs.push(img2);
+            if (img3) newImgs.push(img3);
+
+            p.title = title || p.title;
+            p.price = price;
+            p.images = newImgs.length > 0 ? newImgs : p.images;
+
+            localStorage.setItem('desi_products_v7_master', JSON.stringify(products));
+            alert(`✅ Item #${id} Updated Successfully!`);
+            renderProducts();
+        }
+
+        function deleteProduct(id) {
+            if (confirm("Delete this product from catalog?")) {
+                products = products.filter(p => p.id !== id);
+                localStorage.setItem('desi_products_v7_master', JSON.stringify(products));
+                renderProducts();
+                renderAdminProducts();
+            }
+        }
+
+        function renderAdminProducts() {
+            const table = document.getElementById('admin-product-table');
+            if (!table) return;
+            document.getElementById('admin-product-count').innerText = products.length;
+            table.innerHTML = '';
+
+            products.slice(0, 50).forEach(p => {
+                const img1 = (p.images && p.images[0]) ? p.images[0] : '';
+                const img2 = (p.images && p.images[1]) ? p.images[1] : '';
+                const img3 = (p.images && p.images[2]) ? p.images[2] : '';
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="p-2">
+                        <input type="text" id="edit-title-${p.id}" value="${p.title}" class="w-28 px-1.5 py-1 border rounded text-[10px] font-bold">
+                    </td>
+                    <td class="p-2">
+                        <input type="number" id="edit-price-${p.id}" value="${p.price}" class="w-16 px-1.5 py-1 border rounded font-bold text-[10px]">
+                    </td>
+                    <td class="p-2">
+                        <input type="url" id="edit-img1-${p.id}" value="${img1}" placeholder="Img 1" class="w-24 px-1.5 py-1 border rounded text-[9px]">
+                    </td>
+                    <td class="p-2">
+                        <input type="url" id="edit-img2-${p.id}" value="${img2}" placeholder="Img 2" class="w-24 px-1.5 py-1 border rounded text-[9px]">
+                    </td>
+                    <td class="p-2">
+                        <input type="url" id="edit-img3-${p.id}" value="${img3}" placeholder="Img 3" class="w-24 px-1.5 py-1 border rounded text-[9px]">
+                    </td>
+                    <td class="p-2 text-center space-x-1">
+                        <button onclick="saveSingleProductRow(${p.id})" class="bg-green-600 hover:bg-green-700 text-white font-bold px-2 py-1 rounded text-[9px] shadow">Save</button>
+                        <button onclick="deleteProduct(${p.id})" class="bg-red-600 hover:bg-red-700 text-white font-bold px-2 py-1 rounded text-[9px] shadow"><i class="fa-solid fa-trash-can"></i></button>
+                    </td>
+                `;
+                table.appendChild(tr);
+            });
+        }
+
+        function saveAllPaymentConfig() {
+            paymentSettings.upiId = document.getElementById('admin-upi-id').value;
+            paymentSettings.payeeName = document.getElementById('admin-upi-name').value;
+            paymentSettings.bankAcc = document.getElementById('admin-bank-acc').value;
+            paymentSettings.bankIfsc = document.getElementById('admin-bank-ifsc').value;
+
+            localStorage.setItem('desi_payment_settings', JSON.stringify(paymentSettings));
+            alert("✅ Payment Settings Saved!");
+        }
+
+        function handleQrUpload(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (evt) {
+                    paymentSettings.customQrBase64 = evt.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // ORDER STATUS VERIFICATION & UPDATES
+        function renderAdminOrders() {
+            const container = document.getElementById('admin-orders-list');
+            if (!container) return;
+            container.innerHTML = orders.length === 0 ? `<p class="text-xs text-gray-400 text-center py-4">No orders received yet.</p>` : '';
+
+            orders.forEach(ord => {
+                const div = document.createElement('div');
+                div.className = "border border-gray-200 p-3 rounded-xl bg-gray-50 text-xs space-y-2 shadow-sm";
+                div.innerHTML = `
+                    <div class="flex justify-between font-bold text-brand-600 border-b pb-1">
+                        <span>Order ID: ${ord.orderId}</span>
+                        <span class="text-gray-900">Total: ₹${ord.totalAmount} (${ord.paymentMethod})</span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-1 text-[11px] text-gray-700">
+                        <p><strong>Customer:</strong> ${ord.customer ? ord.customer.name : 'N/A'} (Ph: ${ord.customer ? ord.customer.phone : 'N/A'})</p>
+                        <p><strong>Address:</strong> ${ord.customer ? ord.customer.address : 'N/A'} - ${ord.customer ? ord.customer.pincode : ''}</p>
+                    </div>
+                    <p class="text-gray-800 font-bold">UTR / Ref Transaction ID: <span class="bg-yellow-200 px-1.5 py-0.5 rounded font-mono text-black">${ord.utr || 'N/A'}</span></p>
+
+                    <!-- Order Action & Status Change Dropdown -->
+                    <div class="pt-2 border-t flex items-center justify-between">
+                        <span class="font-bold text-[11px] text-gray-700">Change Delivery Status:</span>
+                        <select onchange="updateOrderStatus('${ord.orderId}', this.value)" class="text-xs border rounded-lg px-2 py-1 bg-white font-bold text-brand-700 outline-none shadow-sm">
+                            <option value="Pending Owner Verification ⏳" ${ord.status.includes('Pending') ? 'selected' : ''}>⏳ Pending Verification</option>
+                            <option value="Payment Verified & Confirmed ✅" ${ord.status.includes('Verified') ? 'selected' : ''}>✅ Payment Verified</option>
+                            <option value="Dispatched 📦" ${ord.status.includes('Dispatched') ? 'selected' : ''}>📦 Dispatched</option>
+                            <option value="Out for Delivery 🛵" ${ord.status.includes('Out') ? 'selected' : ''}>🛵 Out for Delivery</option>
+                            <option value="Delivered 🎁" ${ord.status.includes('Delivered') ? 'selected' : ''}>🎁 Delivered</option>
+                        </select>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function updateOrderStatus(orderId, newStatus) {
+            const ord = orders.find(o => o.orderId === orderId);
+            if (ord) {
+                ord.status = newStatus;
+                localStorage.setItem('desi_orders', JSON.stringify(orders));
+                alert(`✅ Order ${orderId} status updated to: ${newStatus}`);
+
+                // Refresh tracking view if open
+                const trackInput = document.getElementById('track-order-id');
+                if (trackInput && trackInput.value.trim().toUpperCase() === orderId) {
+                    trackOrder();
+                }
+            }
+        }
+
+        function filterCategory(cat) { currentCategory = cat; displayLimit = 20; renderProducts(); }
+        function filterProducts() { displayLimit = 20; renderProducts(); }
+        function loadMoreProducts() { displayLimit += 20; renderProducts(); }
+
+        function switchTab(t) {
+            if (t === 'admin' && !isAdminLoggedIn) {
+                openAdminAuthModal();
+                return;
+            }
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById(`tab-${t}`).classList.remove('hidden');
+            if (t === 'admin') {
+                renderAdminProducts();
+                renderAdminOrders();
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function trackOrder() {
+            const inputId = document.getElementById('track-order-id').value.trim().toUpperCase();
+            const resultBox = document.getElementById('track-result');
+            resultBox.classList.remove('hidden');
+
+            const order = orders.find(o => o.orderId === inputId);
+            if (!order) {
+                resultBox.innerHTML = `<p class="text-xs text-red-600 font-bold text-center">❌ Order ID not found in database.</p>`;
+                return;
+            }
+
+            resultBox.innerHTML = `
+                <div class="bg-amber-50 border border-amber-200 p-3.5 rounded-xl text-xs space-y-1.5 shadow-sm">
+                    <p class="font-extrabold text-brand-700 text-sm">${order.orderId}</p>
+                    <p class="font-bold text-gray-800">Current Status: <span class="bg-amber-200 px-2 py-0.5 rounded text-gray-900">${order.status}</span></p>
+                    <p class="text-gray-600">Total Amount: ₹${order.totalAmount}</p>
+                    <p class="text-[10px] text-gray-500 font-mono">Payment UTR Ref: ${order.utr}</p>
+                </div>
+            `;
+        }
+    </script>
+</body>
+
+</html>
