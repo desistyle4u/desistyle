@@ -215,16 +215,16 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-                <!-- Add New Product Form -->
+                <!-- Add New Product Form with Gallery Upload -->
                 <div class="bg-white p-4 rounded-xl border border-gray-200 space-y-3 shadow-sm">
                     <h4 class="font-bold text-xs uppercase text-brand-600 flex items-center space-x-1 border-b pb-1">
                         <i class="fa-solid fa-plus-circle"></i>
-                        <span>Add New Catalog Item (Up to 3 Images)</span>
+                        <span>Add New Catalog Item (Upload from Gallery)</span>
                     </h4>
                     <form onsubmit="handleProductAdd(event)" class="space-y-2">
                         <div>
                             <label class="block text-[10px] font-bold text-gray-600">Product Title</label>
-                            <input type="text" id="admin-p-title" required placeholder="e.g. Smartphone 5G Pro Max"
+                            <input type="text" id="admin-p-title" required placeholder="e.g. Men Slim Jeans"
                                 class="w-full px-2.5 py-1.5 text-xs border rounded-lg">
                         </div>
                         <div class="grid grid-cols-2 gap-2">
@@ -240,26 +240,15 @@
                             </div>
                             <div>
                                 <label class="block text-[10px] font-bold text-gray-600">Selling Price (₹)</label>
-                                <input type="number" id="admin-p-price" required placeholder="12999"
+                                <input type="number" id="admin-p-price" required placeholder="944"
                                     class="w-full px-2.5 py-1.5 text-xs border rounded-lg">
                             </div>
                         </div>
                         <div>
-                            <label class="block text-[10px] font-bold text-gray-600">Main Image URL (Image 1)</label>
-                            <input type="url" id="admin-p-img1" required placeholder="https://..."
-                                class="w-full px-2.5 py-1.5 text-xs border rounded-lg">
-                        </div>
-                        <div class="grid grid-cols-2 gap-2">
-                            <div>
-                                <label class="block text-[10px] font-bold text-gray-600">Image 2 URL (Optional)</label>
-                                <input type="url" id="admin-p-img2" placeholder="https://..."
-                                    class="w-full px-2.5 py-1.5 text-xs border rounded-lg">
-                            </div>
-                            <div>
-                                <label class="block text-[10px] font-bold text-gray-600">Image 3 URL (Optional)</label>
-                                <input type="url" id="admin-p-img3" placeholder="https://..."
-                                    class="w-full px-2.5 py-1.5 text-xs border rounded-lg">
-                            </div>
+                            <label class="block text-[10px] font-bold text-blue-700">Upload Product Image from
+                                Gallery</label>
+                            <input type="file" id="admin-p-img-file" accept="image/*" required
+                                class="w-full px-2 py-1 text-[10px] border rounded-lg bg-gray-50">
                         </div>
                         <div>
                             <label class="block text-[10px] font-bold text-gray-600">Full Description</label>
@@ -317,14 +306,12 @@
 
             </div>
 
-            <!-- LIVE CATALOG EDITABLE TABLE WITH MULTI-IMAGES CONTROL -->
+            <!-- LIVE CATALOG EDITABLE TABLE -->
             <div class="bg-white p-4 rounded-xl border border-gray-200 space-y-3 shadow-sm">
                 <div class="flex justify-between items-center border-b pb-2">
                     <div>
                         <h4 class="font-bold text-xs uppercase text-gray-800">Live Catalog Management (<span
                                 id="admin-product-count">0</span> Items)</h4>
-                        <p class="text-[10px] text-gray-500">Aap har product ka Title, Price, Description aur teeno
-                            Image URLs ko badal kar "Save Changes" dabayein.</p>
                     </div>
                 </div>
 
@@ -334,9 +321,7 @@
                             <tr>
                                 <th class="p-2.5">Title</th>
                                 <th class="p-2.5">Price (₹)</th>
-                                <th class="p-2.5">Image 1 URL</th>
-                                <th class="p-2.5">Image 2 URL</th>
-                                <th class="p-2.5">Image 3 URL</th>
+                                <th class="p-2.5">Image URL / Data</th>
                                 <th class="p-2.5 text-center">Action</th>
                             </tr>
                         </thead>
@@ -359,7 +344,7 @@
 
     </main>
 
-    <!-- PRODUCT DETAIL MODAL -->
+    <!-- PRODUCT DETAIL MODAL (FLIPKART STYLE WITH SIZE SELECTOR) -->
     <div id="product-detail-modal"
         class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-2 sm:p-4 overflow-y-auto">
         <div class="bg-white w-full max-w-3xl rounded-2xl overflow-hidden shadow-2xl my-auto">
@@ -389,6 +374,28 @@
                             <h2 id="modal-product-name" class="text-lg font-black text-gray-900 leading-snug">Product
                                 Name</h2>
 
+                            <!-- Flipkart Style Size Selector -->
+                            <div class="py-2 space-y-1">
+                                <div class="flex justify-between items-center">
+                                    <span class="font-bold text-[11px] text-gray-800">Select Size</span>
+                                    <span class="text-blue-600 font-bold text-[11px] cursor-pointer"
+                                        onclick="alert('Size Chart: 30(S), 32(M), 34(L), 36(XL), 38(XXL)')">Size
+                                        Chart</span>
+                                </div>
+                                <div class="flex gap-2" id="size-selector-group">
+                                    <button onclick="selectSize(this)"
+                                        class="size-btn px-3 py-1.5 border-2 rounded-xl font-bold text-xs border-gray-300 hover:border-brand-600 focus:border-brand-600 transition">30</button>
+                                    <button onclick="selectSize(this)"
+                                        class="size-btn px-3 py-1.5 border-2 rounded-xl font-bold text-xs border-brand-600 bg-brand-50 text-brand-600 transition">32</button>
+                                    <button onclick="selectSize(this)"
+                                        class="size-btn px-3 py-1.5 border-2 rounded-xl font-bold text-xs border-gray-300 hover:border-brand-600 transition">34</button>
+                                    <button onclick="selectSize(this)"
+                                        class="size-btn px-3 py-1.5 border-2 rounded-xl font-bold text-xs border-gray-300 hover:border-brand-600 transition">36</button>
+                                    <button onclick="selectSize(this)"
+                                        class="size-btn px-3 py-1.5 border-2 rounded-xl font-bold text-xs border-gray-300 hover:border-brand-600 transition">38</button>
+                                </div>
+                            </div>
+
                             <div class="flex items-baseline space-x-2">
                                 <span id="modal-product-price" class="text-xl font-black text-brand-600">₹0</span>
                                 <span id="modal-product-oldprice" class="text-xs text-gray-400 line-through">₹0</span>
@@ -412,10 +419,17 @@
                             </div>
                         </div>
 
-                        <button id="modal-btn-buy" onclick=""
-                            class="w-full bg-brand-600 hover:bg-brand-700 text-white font-black py-3 rounded-xl text-xs shadow-lg transition">
-                            + Buy Now / Proceed to Checkout
-                        </button>
+                        <!-- Flipkart Style Bottom Action Buttons -->
+                        <div class="grid grid-cols-2 gap-2 pt-2">
+                            <button onclick="addCurrentToCart()"
+                                class="bg-white hover:bg-gray-50 text-gray-900 font-black py-3 rounded-xl text-xs border-2 border-gray-300 shadow transition">
+                                Add to cart
+                            </button>
+                            <button onclick="buyNowCurrent()"
+                                class="bg-yellow-400 hover:bg-yellow-500 text-black font-black py-3 rounded-xl text-xs shadow transition">
+                                Buy now
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -431,7 +445,6 @@
                         </button>
                     </div>
 
-                    <!-- Review Form -->
                     <form id="add-review-form" onsubmit="submitCustomerReview(event)"
                         class="hidden bg-gray-50 p-3 rounded-xl border border-gray-200 space-y-2">
                         <p class="font-bold text-[11px] text-gray-800">Add Your Experience:</p>
@@ -459,27 +472,6 @@
                     </form>
 
                     <div id="modal-reviews-container" class="space-y-2"></div>
-                </div>
-
-                <hr>
-
-                <!-- Recommended Items Section -->
-                <div class="space-y-3 pt-2">
-                    <div class="flex justify-between items-center">
-                        <h3 class="font-extrabold text-sm text-gray-900">Recommended Products 🔥</h3>
-                        <span id="rec-count-badge"
-                            class="text-[10px] font-bold text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full border">Showing
-                            Items</span>
-                    </div>
-
-                    <div id="recommended-products-grid" class="grid grid-cols-2 sm:grid-cols-4 gap-3"></div>
-
-                    <div class="text-center pt-2">
-                        <button id="btn-load-more-rec" onclick="loadMoreRecommended()"
-                            class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold px-4 py-1.5 rounded-lg text-[11px] border">
-                            Show More Recommendations
-                        </button>
-                    </div>
                 </div>
 
             </div>
@@ -707,11 +699,6 @@
                 "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=600&q=80",
                 "https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?auto=format&fit=crop&w=600&q=80",
                 "https://images.unsplash.com/photo-1580910051074-3eb694886505?auto=format&fit=crop&w=600&q=80"
-            ],
-            [
-                "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&w=600&q=80",
-                "https://images.unsplash.com/photo-1572536147248-ac59a8abfa4b?auto=format&fit=crop&w=600&q=80",
-                "https://images.unsplash.com/photo-1606220588913-b3aacb4d2f46?auto=format&fit=crop&w=600&q=80"
             ]
         ];
 
@@ -724,17 +711,13 @@
         const ELECTRONICS_NAMES = ["Smartphone 5G Pro Max", "Wireless TWS AirDopes", "Smartwatch Ultra HD Display"];
         const CLOTH_NAMES = { Women: ["Anarkali Suit Set"], Men: ["Silk Kurta Pyjama"], Festive: ["Sherwani Set"] };
 
-        const REVIEW_NAMES = ["Rohan Sharma", "Priya Singh", "Amit Kumar", "Ananya Roy", "Sneha Patel", "Rahul Verma"];
-        const CLOTH_REVIEWS = ["Fabric bohot mast hai!", "Color photo jaisa hi hai.", "Super 2-day delivery! Loved it!"];
-        const ELECTRONICS_REVIEWS = ["Battery backup super solid!", "Best value electronics gadget.", "Superb performance!"];
-
         let products = [];
         let cart = [];
         let orders = [];
         let currentCategory = 'All';
         let displayLimit = 20;
-        let recommendedLimit = 12;
         let activeDetailProductId = null;
+        let selectedProductSize = "32"; // Default selected size
         let isAdminLoggedIn = false;
 
         let paymentSettings = {
@@ -778,48 +761,36 @@
 
         function generate1000Catalogs(alertUser = true) {
             products = [];
-
-            for (let i = 1; i <= 1000; i++) {
-                const name = ELECTRONICS_NAMES[i % ELECTRONICS_NAMES.length];
+            for (let i = 1; i <= 500; i++) {
                 const basePrice = 799 + ((i * 83) % 25000);
-
                 products.push({
                     id: 5000 + i,
-                    title: `${name} #${1000 + i}`,
+                    title: `Smartphone 5G Pro Max #${i}`,
                     category: "Electronics",
                     price: basePrice,
                     oldPrice: basePrice + 1200,
-                    images: ELECTRONICS_IMAGES[i % ELECTRONICS_IMAGES.length],
-                    description: "High performance premium electronics device with 1 Year Warranty and Express Delivery.",
-                    reviewsList: [
-                        { name: REVIEW_NAMES[i % REVIEW_NAMES.length], age: 24, rating: 5, comment: ELECTRONICS_REVIEWS[i % ELECTRONICS_REVIEWS.length], img: "" }
-                    ]
+                    images: ELECTRONICS_IMAGES[0],
+                    description: "High performance premium electronics device with 1 Year Warranty.",
+                    reviewsList: [{ name: "Rohan Sharma", age: 24, rating: 5, comment: "Battery backup super solid!", img: "" }]
                 });
             }
-
-            for (let i = 1; i <= 1000; i++) {
-                const cat = (i % 2 === 0) ? "Women" : "Men";
-                const title = `Desi ${CLOTH_NAMES[cat][0]} #${1000 + i}`;
+            for (let i = 1; i <= 500; i++) {
                 const basePrice = 399 + ((i * 37) % 2100);
-
                 products.push({
                     id: 2000 + i,
-                    title: title,
-                    category: cat,
+                    title: `Men Slim Mid Rise Jeans #${i}`,
+                    category: "Men",
                     price: basePrice,
-                    oldPrice: basePrice + 500,
+                    oldPrice: basePrice + 800,
                     images: FASHION_IMAGES,
-                    description: "Pure quality ethnic wear fabric with rich look and smooth finish.",
-                    reviewsList: [
-                        { name: REVIEW_NAMES[(i + 2) % REVIEW_NAMES.length], age: 22, rating: 5, comment: CLOTH_REVIEWS[i % CLOTH_REVIEWS.length], img: "" }
-                    ]
+                    description: "Pure quality denim fabric with rich look and smooth finish.",
+                    reviewsList: [{ name: "Priya Singh", age: 22, rating: 5, comment: "Fabric bohot mast hai!", img: "" }]
                 });
             }
-
             localStorage.setItem('desi_products_v7_master', JSON.stringify(products));
             renderProducts();
             renderAdminProducts();
-            if (alertUser) alert("⚡ 2,000 Products Catalog Generated Successfully!");
+            if (alertUser) alert("⚡ Catalog Generated Successfully!");
         }
 
         function renderProducts() {
@@ -842,11 +813,9 @@
             visibleItems.forEach(p => {
                 const discount = Math.round(((p.oldPrice - p.price) / p.oldPrice) * 100);
                 const mainImg = p.images && p.images.length > 0 ? p.images[0] : 'https://via.placeholder.com/300';
-                const firstRev = (p.reviewsList && p.reviewsList.length > 0) ? p.reviewsList[0] : null;
 
                 const card = document.createElement('div');
                 card.className = "bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm flex flex-col justify-between cursor-pointer hover:shadow-md transition";
-
                 card.innerHTML = `
                     <div onclick="openProductDetailModal(${p.id})">
                         <div class="relative aspect-square overflow-hidden bg-gray-100">
@@ -861,28 +830,26 @@
                                 <span class="text-xs font-black text-brand-600">₹${p.price}</span>
                                 <span class="text-[10px] text-gray-400 line-through">₹${p.oldPrice}</span>
                             </div>
-
-                            ${firstRev ? `
-                            <div class="bg-gray-50 p-1.5 rounded-lg border border-gray-100 text-[9px] space-y-0.5">
-                                <div class="flex justify-between items-center font-bold text-gray-800">
-                                    <span class="truncate">${firstRev.name} (${firstRev.age}y)</span>
-                                    <span class="text-amber-500 font-extrabold shrink-0">★ ${firstRev.rating}</span>
-                                </div>
-                                <p class="text-gray-500 italic line-clamp-1">"${firstRev.comment}"</p>
-                            </div>
-                            ` : ''}
                         </div>
                     </div>
                     <div class="p-2 pt-1">
-                        <button onclick="addToCartAndCheckout(${p.id})" class="w-full bg-gray-900 hover:bg-brand-600 text-white font-bold py-1.5 rounded-lg text-[10px] transition">
+                        <button onclick="addToCartDirect(${p.id})" class="w-full bg-gray-900 hover:bg-brand-600 text-white font-bold py-1.5 rounded-lg text-[10px] transition">
                             + Add to Cart & Buy
                         </button>
                     </div>
                 `;
                 grid.appendChild(card);
             });
-
             document.getElementById('btn-load-more').classList.toggle('hidden', filtered.length <= displayLimit);
+        }
+
+        // SIZE SELECTOR
+        function selectSize(btn) {
+            document.querySelectorAll('.size-btn').forEach(b => {
+                b.className = "size-btn px-3 py-1.5 border-2 rounded-xl font-bold text-xs border-gray-300 hover:border-brand-600 transition";
+            });
+            btn.className = "size-btn px-3 py-1.5 border-2 rounded-xl font-bold text-xs border-brand-600 bg-brand-50 text-brand-600 transition";
+            selectedProductSize = btn.innerText;
         }
 
         // OPEN PRODUCT MODAL
@@ -891,7 +858,7 @@
             if (!p) return;
 
             activeDetailProductId = id;
-            recommendedLimit = 12;
+            selectedProductSize = "32"; // Reset default
 
             document.getElementById('modal-product-title').innerText = p.title;
             document.getElementById('modal-product-name').innerText = p.title;
@@ -922,13 +889,7 @@
                 thumbsContainer.appendChild(thumb);
             });
 
-            document.getElementById('modal-btn-buy').onclick = function () {
-                closeProductDetailModal();
-                addToCartAndCheckout(p.id);
-            };
-
             renderModalReviews(p);
-            renderRecommendedProducts(p);
             document.getElementById('product-detail-modal').classList.remove('hidden');
         }
 
@@ -937,49 +898,49 @@
             document.getElementById('add-review-form').classList.add('hidden');
         }
 
-        function renderRecommendedProducts(currentProduct) {
-            const container = document.getElementById('recommended-products-grid');
-            container.innerHTML = '';
-
-            const allRecommended = products.filter(p => p.id !== currentProduct.id);
-            const visibleRecs = allRecommended.slice(0, recommendedLimit);
-
-            document.getElementById('rec-count-badge').innerText = `Showing ${visibleRecs.length} of ${allRecommended.length} Items`;
-
-            visibleRecs.forEach(rec => {
-                const img = rec.images && rec.images.length > 0 ? rec.images[0] : 'https://via.placeholder.com/150';
-                const div = document.createElement('div');
-                div.className = "bg-gray-50 border p-2 rounded-xl text-center space-y-1 cursor-pointer hover:shadow transition";
-                div.onclick = function () { openProductDetailModal(rec.id); };
-                div.innerHTML = `
-                    <img src="${img}" class="w-full aspect-square object-cover rounded-lg">
-                    <p class="font-bold text-[10px] text-gray-800 line-clamp-1">${rec.title}</p>
-                    <p class="text-brand-600 font-black text-xs">₹${rec.price}</p>
-                `;
-                container.appendChild(div);
-            });
-
-            document.getElementById('btn-load-more-rec').classList.toggle('hidden', allRecommended.length <= recommendedLimit);
+        function addCurrentToCart() {
+            const p = products.find(prod => prod.id === activeDetailProductId);
+            if (!p) return;
+            const item = cart.find(i => i.id === p.id && i.size === selectedProductSize);
+            if (item) item.qty += 1;
+            else cart.push({ ...p, qty: 1, size: selectedProductSize });
+            updateCartBadge();
+            renderCartDrawer();
+            closeProductDetailModal();
+            toggleCartDrawer(true);
         }
 
-        function loadMoreRecommended() {
-            recommendedLimit += 20;
-            const product = products.find(p => p.id === activeDetailProductId);
-            if (product) renderRecommendedProducts(product);
+        function buyNowCurrent() {
+            const p = products.find(prod => prod.id === activeDetailProductId);
+            if (!p) return;
+            const item = cart.find(i => i.id === p.id && i.size === selectedProductSize);
+            if (item) item.qty += 1;
+            else cart.push({ ...p, qty: 1, size: selectedProductSize });
+            updateCartBadge();
+            renderCartDrawer();
+            closeProductDetailModal();
+            openCheckoutModal();
         }
 
-        function toggleReviewForm() { document.getElementById('add-review-form').classList.toggle('hidden'); }
+        function addToCartDirect(id) {
+            const p = products.find(prod => prod.id === id);
+            if (!p) return;
+            const item = cart.find(i => i.id === id && i.size === "32");
+            if (item) item.qty += 1;
+            else cart.push({ ...p, qty: 1, size: "32" });
+            updateCartBadge();
+            renderCartDrawer();
+            openCheckoutModal();
+        }
 
         function renderModalReviews(product) {
             const container = document.getElementById('modal-reviews-container');
             container.innerHTML = '';
-
             const list = product.reviewsList || [];
             if (list.length === 0) {
                 container.innerHTML = `<p class="text-gray-400 text-[10px] text-center">No reviews yet.</p>`;
                 return;
             }
-
             list.forEach(r => {
                 const div = document.createElement('div');
                 div.className = "bg-gray-50 p-2.5 rounded-xl border space-y-1";
@@ -989,61 +950,31 @@
                         <span class="text-amber-500 font-bold text-[10px]">${'★'.repeat(r.rating)}</span>
                     </div>
                     <p class="text-gray-700 text-[11px]">${r.comment}</p>
-                    ${r.img ? `<img src="${r.img}" class="w-16 h-16 object-cover rounded-lg border mt-1">` : ''}
                 `;
                 container.appendChild(div);
             });
         }
 
+        function toggleReviewForm() { document.getElementById('add-review-form').classList.toggle('hidden'); }
+
         function submitCustomerReview(e) {
             e.preventDefault();
             const product = products.find(p => p.id === activeDetailProductId);
             if (!product) return;
-
             const name = document.getElementById('rev-user-name').value;
             const age = document.getElementById('rev-user-age').value;
             const rating = parseInt(document.getElementById('rev-user-rating').value);
             const comment = document.getElementById('rev-user-comment').value;
-            const imgFile = document.getElementById('rev-user-img').files[0];
 
-            let imgBase64 = "";
-
-            const saveReview = () => {
-                if (!product.reviewsList) product.reviewsList = [];
-                product.reviewsList.unshift({ name, age, rating, comment, img: imgBase64 });
-                localStorage.setItem('desi_products_v7_master', JSON.stringify(products));
-                renderModalReviews(product);
-                toggleReviewForm();
-                renderProducts();
-                alert("✅ Review Added Successfully!");
-            };
-
-            if (imgFile) {
-                const reader = new FileReader();
-                reader.onload = function (evt) {
-                    imgBase64 = evt.target.result;
-                    saveReview();
-                };
-                reader.readAsDataURL(imgFile);
-            } else {
-                saveReview();
-            }
+            if (!product.reviewsList) product.reviewsList = [];
+            product.reviewsList.unshift({ name, age, rating, comment, img: "" });
+            localStorage.setItem('desi_products_v7_master', JSON.stringify(products));
+            renderModalReviews(product);
+            toggleReviewForm();
+            alert("✅ Review Added Successfully!");
         }
 
         // CART & CHECKOUT
-        function addToCartAndCheckout(id) {
-            const product = products.find(p => p.id === id);
-            if (!product) return;
-
-            const item = cart.find(i => i.id === id);
-            if (item) item.qty += 1;
-            else cart.push({ ...product, qty: 1 });
-
-            updateCartBadge();
-            renderCartDrawer();
-            openCheckoutModal();
-        }
-
         function updateCartBadge() {
             const count = cart.reduce((s, i) => s + i.qty, 0);
             document.getElementById('cart-count-badge').innerText = count;
@@ -1079,6 +1010,7 @@
                         <img src="${img}" class="w-14 h-14 object-cover rounded-xl border">
                         <div class="flex-1 text-xs space-y-1">
                             <h4 class="font-bold text-gray-900 line-clamp-1">${item.title}</h4>
+                            <p class="text-[10px] text-gray-500 font-bold">Size: ${item.size || '32'}</p>
                             <p class="text-brand-600 font-extrabold">₹${item.price}</p>
                             <div class="flex items-center space-x-2">
                                 <button onclick="changeQty(${index}, -1)" class="w-5 h-5 bg-gray-200 text-gray-700 font-bold rounded flex items-center justify-center">-</button>
@@ -1091,7 +1023,6 @@
                     container.appendChild(div);
                 });
             }
-
             document.getElementById('cart-subtotal').innerText = `₹${total}`;
             document.getElementById('cart-total').innerText = `₹${total}`;
         }
@@ -1112,13 +1043,12 @@
         function openCheckoutModal() {
             toggleCartDrawer(false);
             const total = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
-
             const summaryContainer = document.getElementById('checkout-summary-items');
             summaryContainer.innerHTML = '';
             cart.forEach(item => {
                 const p = document.createElement('div');
                 p.className = "flex justify-between py-0.5 border-b border-gray-100 last:border-0";
-                p.innerHTML = `<span>• ${item.title} (x${item.qty})</span><span class="font-bold">₹${item.price * item.qty}</span>`;
+                p.innerHTML = `<span>• ${item.title} (Sz: ${item.size}, x${item.qty})</span><span class="font-bold">₹${item.price * item.qty}</span>`;
                 summaryContainer.appendChild(p);
             });
 
@@ -1144,7 +1074,6 @@
             const payeeName = encodeURIComponent(paymentSettings.payeeName);
             const upiUri = `upi://pay?pa=${paymentSettings.upiId}&pn=${payeeName}&am=${amount}&cu=INR&tn=DesiStyleOrder`;
             document.getElementById('direct-upi-link').href = upiUri;
-
             if (paymentSettings.customQrBase64) {
                 document.getElementById('upi-qr-image').src = paymentSettings.customQrBase64;
             } else {
@@ -1186,13 +1115,43 @@
 
         function closeSuccessModal() { document.getElementById('success-modal').classList.add('hidden'); switchTab('shop'); }
 
-        // MASTER ADMIN & LIVE CATALOG FULL ACCESS LOGIC
-        function openAdminAuthModal() {
-            if (isAdminLoggedIn) {
-                switchTab('admin');
-            } else {
-                document.getElementById('admin-auth-modal').classList.remove('hidden');
+        // GALLERY IMAGE UPLOAD & ADMIN ADD PRODUCT
+        function handleProductAdd(e) {
+            e.preventDefault();
+            const title = document.getElementById('admin-p-title').value;
+            const category = document.getElementById('admin-p-cat').value;
+            const price = parseFloat(document.getElementById('admin-p-price').value);
+            const desc = document.getElementById('admin-p-desc').value;
+            const imgFile = document.getElementById('admin-p-img-file').files[0];
+
+            if (!imgFile) {
+                alert("Pehle gallery se photo select karein!");
+                return;
             }
+
+            const reader = new FileReader();
+            reader.onload = function (evt) {
+                const base64Image = evt.target.result;
+                products.unshift({
+                    id: Date.now(),
+                    title, category, price, oldPrice: price + 400,
+                    images: [base64Image, base64Image, base64Image],
+                    description: desc || "Premium quality item.",
+                    reviewsList: []
+                });
+
+                localStorage.setItem('desi_products_v7_master', JSON.stringify(products));
+                alert("✅ Photo uploaded & Product Live!");
+                renderProducts();
+                renderAdminProducts();
+                e.target.reset();
+            };
+            reader.readAsDataURL(imgFile);
+        }
+
+        function openAdminAuthModal() {
+            if (isAdminLoggedIn) switchTab('admin');
+            else document.getElementById('admin-auth-modal').classList.remove('hidden');
         }
 
         function closeAdminAuthModal() { document.getElementById('admin-auth-modal').classList.add('hidden'); }
@@ -1201,7 +1160,6 @@
             e.preventDefault();
             const u = document.getElementById('admin-user-input').value;
             const p = document.getElementById('admin-pass-input').value;
-
             if (u === "Rudra" && p === "Vicky9091") {
                 isAdminLoggedIn = true;
                 closeAdminAuthModal();
@@ -1215,61 +1173,8 @@
 
         function logoutAdmin() { isAdminLoggedIn = false; switchTab('shop'); }
 
-        function handleProductAdd(e) {
-            e.preventDefault();
-            const title = document.getElementById('admin-p-title').value;
-            const category = document.getElementById('admin-p-cat').value;
-            const price = parseFloat(document.getElementById('admin-p-price').value);
-            const img1 = document.getElementById('admin-p-img1').value;
-            const img2 = document.getElementById('admin-p-img2').value;
-            const img3 = document.getElementById('admin-p-img3').value;
-            const desc = document.getElementById('admin-p-desc').value;
-
-            const imgs = [img1];
-            if (img2) imgs.push(img2);
-            if (img3) imgs.push(img3);
-
-            products.unshift({
-                id: Date.now(),
-                title, category, price, oldPrice: price + 400,
-                images: imgs,
-                description: desc || "Premium quality item.",
-                reviewsList: []
-            });
-
-            localStorage.setItem('desi_products_v7_master', JSON.stringify(products));
-            alert("✅ New Product Added Successfully!");
-            renderProducts();
-            renderAdminProducts();
-        }
-
-        // SAVE CHANGES FOR SINGLE LIVE PRODUCT
-        function saveSingleProductRow(id) {
-            const p = products.find(prod => prod.id === id);
-            if (!p) return;
-
-            const title = document.getElementById(`edit-title-${id}`).value.trim();
-            const price = parseFloat(document.getElementById(`edit-price-${id}`).value) || p.price;
-            const img1 = document.getElementById(`edit-img1-${id}`).value.trim();
-            const img2 = document.getElementById(`edit-img2-${id}`).value.trim();
-            const img3 = document.getElementById(`edit-img3-${id}`).value.trim();
-
-            const newImgs = [];
-            if (img1) newImgs.push(img1);
-            if (img2) newImgs.push(img2);
-            if (img3) newImgs.push(img3);
-
-            p.title = title || p.title;
-            p.price = price;
-            p.images = newImgs.length > 0 ? newImgs : p.images;
-
-            localStorage.setItem('desi_products_v7_master', JSON.stringify(products));
-            alert(`✅ Item #${id} Updated Successfully!`);
-            renderProducts();
-        }
-
         function deleteProduct(id) {
-            if (confirm("Delete this product from catalog?")) {
+            if (confirm("Delete this product?")) {
                 products = products.filter(p => p.id !== id);
                 localStorage.setItem('desi_products_v7_master', JSON.stringify(products));
                 renderProducts();
@@ -1282,33 +1187,13 @@
             if (!table) return;
             document.getElementById('admin-product-count').innerText = products.length;
             table.innerHTML = '';
-
-            products.slice(0, 50).forEach(p => {
-                const img1 = (p.images && p.images[0]) ? p.images[0] : '';
-                const img2 = (p.images && p.images[1]) ? p.images[1] : '';
-                const img3 = (p.images && p.images[2]) ? p.images[2] : '';
-
+            products.slice(0, 30).forEach(p => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td class="p-2">
-                        <input type="text" id="edit-title-${p.id}" value="${p.title}" class="w-28 px-1.5 py-1 border rounded text-[10px] font-bold">
-                    </td>
-                    <td class="p-2">
-                        <input type="number" id="edit-price-${p.id}" value="${p.price}" class="w-16 px-1.5 py-1 border rounded font-bold text-[10px]">
-                    </td>
-                    <td class="p-2">
-                        <input type="url" id="edit-img1-${p.id}" value="${img1}" placeholder="Img 1" class="w-24 px-1.5 py-1 border rounded text-[9px]">
-                    </td>
-                    <td class="p-2">
-                        <input type="url" id="edit-img2-${p.id}" value="${img2}" placeholder="Img 2" class="w-24 px-1.5 py-1 border rounded text-[9px]">
-                    </td>
-                    <td class="p-2">
-                        <input type="url" id="edit-img3-${p.id}" value="${img3}" placeholder="Img 3" class="w-24 px-1.5 py-1 border rounded text-[9px]">
-                    </td>
-                    <td class="p-2 text-center space-x-1">
-                        <button onclick="saveSingleProductRow(${p.id})" class="bg-green-600 hover:bg-green-700 text-white font-bold px-2 py-1 rounded text-[9px] shadow">Save</button>
-                        <button onclick="deleteProduct(${p.id})" class="bg-red-600 hover:bg-red-700 text-white font-bold px-2 py-1 rounded text-[9px] shadow"><i class="fa-solid fa-trash-can"></i></button>
-                    </td>
+                    <td class="p-2 font-bold">${p.title}</td>
+                    <td class="p-2 font-bold">₹${p.price}</td>
+                    <td class="p-2"><img src="${p.images[0]}" class="w-10 h-10 object-cover rounded border"></td>
+                    <td class="p-2 text-center"><button onclick="deleteProduct(${p.id})" class="bg-red-600 text-white px-2 py-1 rounded text-[9px]">Delete</button></td>
                 `;
                 table.appendChild(tr);
             });
@@ -1319,7 +1204,6 @@
             paymentSettings.payeeName = document.getElementById('admin-upi-name').value;
             paymentSettings.bankAcc = document.getElementById('admin-bank-acc').value;
             paymentSettings.bankIfsc = document.getElementById('admin-bank-ifsc').value;
-
             localStorage.setItem('desi_payment_settings', JSON.stringify(paymentSettings));
             alert("✅ Payment Settings Saved!");
         }
@@ -1328,19 +1212,15 @@
             const file = e.target.files[0];
             if (file) {
                 const reader = new FileReader();
-                reader.onload = function (evt) {
-                    paymentSettings.customQrBase64 = evt.target.result;
-                };
+                reader.onload = function (evt) { paymentSettings.customQrBase64 = evt.target.result; };
                 reader.readAsDataURL(file);
             }
         }
 
-        // ORDER STATUS VERIFICATION & UPDATES
         function renderAdminOrders() {
             const container = document.getElementById('admin-orders-list');
             if (!container) return;
             container.innerHTML = orders.length === 0 ? `<p class="text-xs text-gray-400 text-center py-4">No orders received yet.</p>` : '';
-
             orders.forEach(ord => {
                 const div = document.createElement('div');
                 div.className = "border border-gray-200 p-3 rounded-xl bg-gray-50 text-xs space-y-2 shadow-sm";
@@ -1349,16 +1229,11 @@
                         <span>Order ID: ${ord.orderId}</span>
                         <span class="text-gray-900">Total: ₹${ord.totalAmount} (${ord.paymentMethod})</span>
                     </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-1 text-[11px] text-gray-700">
-                        <p><strong>Customer:</strong> ${ord.customer ? ord.customer.name : 'N/A'} (Ph: ${ord.customer ? ord.customer.phone : 'N/A'})</p>
-                        <p><strong>Address:</strong> ${ord.customer ? ord.customer.address : 'N/A'} - ${ord.customer ? ord.customer.pincode : ''}</p>
-                    </div>
-                    <p class="text-gray-800 font-bold">UTR / Ref Transaction ID: <span class="bg-yellow-200 px-1.5 py-0.5 rounded font-mono text-black">${ord.utr || 'N/A'}</span></p>
-
-                    <!-- Order Action & Status Change Dropdown -->
+                    <p><strong>Customer:</strong> ${ord.customer.name} (Ph: ${ord.customer.phone}) | <strong>Address:</strong> ${ord.customer.address} - ${ord.customer.pincode}</p>
+                    <p><strong>UTR ID:</strong> <span class="bg-yellow-200 px-1 font-mono">${ord.utr}</span></p>
                     <div class="pt-2 border-t flex items-center justify-between">
                         <span class="font-bold text-[11px] text-gray-700">Change Delivery Status:</span>
-                        <select onchange="updateOrderStatus('${ord.orderId}', this.value)" class="text-xs border rounded-lg px-2 py-1 bg-white font-bold text-brand-700 outline-none shadow-sm">
+                        <select onchange="updateOrderStatus('${ord.orderId}', this.value)" class="text-xs border rounded-lg px-2 py-1 bg-white font-bold text-brand-700 outline-none">
                             <option value="Pending Owner Verification ⏳" ${ord.status.includes('Pending') ? 'selected' : ''}>⏳ Pending Verification</option>
                             <option value="Payment Verified & Confirmed ✅" ${ord.status.includes('Verified') ? 'selected' : ''}>✅ Payment Verified</option>
                             <option value="Dispatched 📦" ${ord.status.includes('Dispatched') ? 'selected' : ''}>📦 Dispatched</option>
@@ -1376,13 +1251,7 @@
             if (ord) {
                 ord.status = newStatus;
                 localStorage.setItem('desi_orders', JSON.stringify(orders));
-                alert(`✅ Order ${orderId} status updated to: ${newStatus}`);
-
-                // Refresh tracking view if open
-                const trackInput = document.getElementById('track-order-id');
-                if (trackInput && trackInput.value.trim().toUpperCase() === orderId) {
-                    trackOrder();
-                }
+                alert(`✅ Order ${orderId} updated to: ${newStatus}`);
             }
         }
 
@@ -1391,16 +1260,10 @@
         function loadMoreProducts() { displayLimit += 20; renderProducts(); }
 
         function switchTab(t) {
-            if (t === 'admin' && !isAdminLoggedIn) {
-                openAdminAuthModal();
-                return;
-            }
+            if (t === 'admin' && !isAdminLoggedIn) { openAdminAuthModal(); return; }
             document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
             document.getElementById(`tab-${t}`).classList.remove('hidden');
-            if (t === 'admin') {
-                renderAdminProducts();
-                renderAdminOrders();
-            }
+            if (t === 'admin') { renderAdminProducts(); renderAdminOrders(); }
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
@@ -1408,19 +1271,16 @@
             const inputId = document.getElementById('track-order-id').value.trim().toUpperCase();
             const resultBox = document.getElementById('track-result');
             resultBox.classList.remove('hidden');
-
             const order = orders.find(o => o.orderId === inputId);
             if (!order) {
-                resultBox.innerHTML = `<p class="text-xs text-red-600 font-bold text-center">❌ Order ID not found in database.</p>`;
+                resultBox.innerHTML = `<p class="text-xs text-red-600 font-bold text-center">❌ Order ID not found.</p>`;
                 return;
             }
-
             resultBox.innerHTML = `
                 <div class="bg-amber-50 border border-amber-200 p-3.5 rounded-xl text-xs space-y-1.5 shadow-sm">
                     <p class="font-extrabold text-brand-700 text-sm">${order.orderId}</p>
                     <p class="font-bold text-gray-800">Current Status: <span class="bg-amber-200 px-2 py-0.5 rounded text-gray-900">${order.status}</span></p>
                     <p class="text-gray-600">Total Amount: ₹${order.totalAmount}</p>
-                    <p class="text-[10px] text-gray-500 font-mono">Payment UTR Ref: ${order.utr}</p>
                 </div>
             `;
         }
